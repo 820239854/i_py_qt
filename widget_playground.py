@@ -1,7 +1,7 @@
 import sys
 
-from PySide6.QtGui import QPixmap
-from PySide6.QtWidgets import QApplication, QLabel, QMainWindow
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QApplication, QCheckBox, QMainWindow
 
 
 class MainWindow(QMainWindow):
@@ -10,11 +10,20 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
 
-        widget = QLabel("Hello")
-        widget.setPixmap(QPixmap("otje.jpg"))
-        # you can set.setScaledContents(True) on the QLabel to stretch image.
-        # widget.setScaledContents(True)
+        widget = QCheckBox("This is a checkbox")
+        # setChecked  setCheckState  setTristate 可以设置checkBox状态
+        widget.setCheckState(Qt.Checked)
+
+        # For tristate: widget.setCheckState(Qt.PartiallyChecked)
+        # Or: widget.setTristate(True)
+        widget.stateChanged.connect(self.show_state)
+
         self.setCentralWidget(widget)
+
+    def show_state(self, s):
+        print(s == Qt.Checked)
+        print(s)
+
 
 app = QApplication(sys.argv)
 
