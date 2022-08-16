@@ -1,7 +1,5 @@
 import sys
-
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication, QCheckBox, QMainWindow
+from PySide6.QtWidgets import QApplication, QComboBox, QMainWindow
 
 
 class MainWindow(QMainWindow):
@@ -10,18 +8,21 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
 
-        widget = QCheckBox("This is a checkbox")
-        # setChecked  setCheckState  setTristate 可以设置checkBox状态
-        widget.setCheckState(Qt.Checked)
+        widget = QComboBox()
+        widget.addItems(["One", "Two", "Three"])
 
-        # For tristate: widget.setCheckState(Qt.PartiallyChecked)
-        # Or: widget.setTristate(True)
-        widget.stateChanged.connect(self.show_state)
-
+        widget.currentIndexChanged.connect(self.index_changed)
+        widget.currentTextChanged.connect(self.text_changed)
+        # widget.setMaxCount(10)
+        # widget.setEditable(True)
+        # widget.setInsertPolicy(QComboBox.InsertAlphabetically)
         self.setCentralWidget(widget)
 
-    def show_state(self, s):
-        print(s == Qt.Checked)
+
+    def index_changed(self, i):  # i is an int
+        print(i)
+
+    def text_changed(self, s):  # s is a str
         print(s)
 
 
