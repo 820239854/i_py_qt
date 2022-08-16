@@ -15,6 +15,7 @@ class MainWindow(QMainWindow):
         widget.setPlaceholderText("Enter your text")
 
         # widget.setReadOnly(True) # uncomment this to make readonly
+        # widget.setInputMask('000.000.000.000;_')
 
         widget.returnPressed.connect(self.return_pressed)
         widget.selectionChanged.connect(self.selection_changed)
