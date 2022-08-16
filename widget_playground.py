@@ -1,6 +1,6 @@
 import sys
 
-from PySide6.QtCore import Qt
+from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QApplication, QLabel, QMainWindow
 
 
@@ -11,14 +11,10 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("My App")
 
         widget = QLabel("Hello")
-        # We get the current font, using <widget>.font(), modify it and then apply it back.This ensures the font face remains in keeping with the desktop conventions.
-        font = widget.font()
-        font.setPointSize(30)
-        widget.setFont(font)
-        widget.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
-
+        widget.setPixmap(QPixmap("otje.jpg"))
+        # you can set.setScaledContents(True) on the QLabel to stretch image.
+        # widget.setScaledContents(True)
         self.setCentralWidget(widget)
-
 
 app = QApplication(sys.argv)
 
