@@ -1,21 +1,17 @@
 import sys
-
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication, QMainWindow, QSlider
+from PySide6.QtWidgets import QApplication, QDial, QMainWindow
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+
         self.setWindowTitle("My App")
 
-        widget = QSlider(Qt.Vertical)
-
-        widget.setMinimum(-10)
-        widget.setMaximum(3)
-        # Or: widget.setRange(-10,3)
-
-        widget.setSingleStep(3)
+        widget = QDial()
+        widget.setRange(-10, 100)
+        widget.setSingleStep(0.5)
 
         widget.valueChanged.connect(self.value_changed)
         widget.sliderMoved.connect(self.slider_position)
@@ -35,6 +31,7 @@ class MainWindow(QMainWindow):
 
     def slider_released(self):
         print("Released")
+
 
 app = QApplication(sys.argv)
 
