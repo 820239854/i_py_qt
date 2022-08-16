@@ -1,7 +1,7 @@
 import sys
 
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication, QLineEdit, QMainWindow
+from PySide6.QtWidgets import QApplication, QMainWindow, QSpinBox, QDoubleSpinBox
 
 
 class MainWindow(QMainWindow):
@@ -10,34 +10,24 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
 
-        widget = QLineEdit()
-        widget.setMaxLength(10)
-        widget.setPlaceholderText("Enter your text")
+        widget = QSpinBox()
+        # widget = QDoubleSpinBox()
 
-        # widget.setReadOnly(True) # uncomment this to make readonly
-        # widget.setInputMask('000.000.000.000;_')
+        widget.setMinimum(-10)
+        widget.setMaximum(3)
+        # Or: widget.setRange(-10,3)
 
-        widget.returnPressed.connect(self.return_pressed)
-        widget.selectionChanged.connect(self.selection_changed)
-        widget.textChanged.connect(self.text_changed)
-        widget.textEdited.connect(self.text_edited)
+        widget.setPrefix("$")
+        widget.setSuffix("c")
+        widget.setSingleStep(3)  # Or e.g. 0.5 for QDoubleSpinBox
+        widget.valueChanged.connect(self.value_changed)
+        widget.textChanged.connect(self.value_changed_str)
 
         self.setCentralWidget(widget)
 
-    def return_pressed(self):
-        print("Return pressed!")
-        self.centralWidget().setText("BOOM!")
-
-    def selection_changed(self):
-        print("Selection changed")
-        print(self.centralWidget().selectedText())
-
-    def text_changed(self, s):
-        print("Text changed...")
-        print(s)
-
-    def text_edited(self, s):
-        print("Text edited...")
+    def value_changed(self, i):
+        print(i)
+    def value_changed_str(self, s):
         print(s)
 
 
