@@ -1,5 +1,6 @@
 import sys
-from PySide6.QtWidgets import QApplication, QComboBox, QMainWindow
+
+from PySide6.QtWidgets import QApplication, QListWidget, QMainWindow
 
 
 class MainWindow(QMainWindow):
@@ -8,23 +9,19 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
 
-        widget = QComboBox()
+        widget = QListWidget()
         widget.addItems(["One", "Two", "Three"])
 
-        widget.currentIndexChanged.connect(self.index_changed)
+        widget.currentItemChanged.connect(self.index_changed)
         widget.currentTextChanged.connect(self.text_changed)
-        # widget.setMaxCount(10)
-        # widget.setEditable(True)
-        # widget.setInsertPolicy(QComboBox.InsertAlphabetically)
+
         self.setCentralWidget(widget)
 
-
-    def index_changed(self, i):  # i is an int
-        print(i)
+    def index_changed(self, i):  # Not an index, i is a QListItem
+        print(i.text())
 
     def text_changed(self, s):  # s is a str
         print(s)
-
 
 app = QApplication(sys.argv)
 
