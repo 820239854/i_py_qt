@@ -1,6 +1,7 @@
 import sys
 
-from PySide6.QtWidgets import QApplication, QListWidget, QMainWindow
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QApplication, QLineEdit, QMainWindow
 
 
 class MainWindow(QMainWindow):
@@ -9,19 +10,35 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
 
-        widget = QListWidget()
-        widget.addItems(["One", "Two", "Three"])
+        widget = QLineEdit()
+        widget.setMaxLength(10)
+        widget.setPlaceholderText("Enter your text")
 
-        widget.currentItemChanged.connect(self.index_changed)
-        widget.currentTextChanged.connect(self.text_changed)
+        # widget.setReadOnly(True) # uncomment this to make readonly
+
+        widget.returnPressed.connect(self.return_pressed)
+        widget.selectionChanged.connect(self.selection_changed)
+        widget.textChanged.connect(self.text_changed)
+        widget.textEdited.connect(self.text_edited)
 
         self.setCentralWidget(widget)
 
-    def index_changed(self, i):  # Not an index, i is a QListItem
-        print(i.text())
+    def return_pressed(self):
+        print("Return pressed!")
+        self.centralWidget().setText("BOOM!")
 
-    def text_changed(self, s):  # s is a str
+    def selection_changed(self):
+        print("Selection changed")
+        print(self.centralWidget().selectedText())
+
+    def text_changed(self, s):
+        print("Text changed...")
         print(s)
+
+    def text_edited(self, s):
+        print("Text edited...")
+        print(s)
+
 
 app = QApplication(sys.argv)
 
