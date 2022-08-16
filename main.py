@@ -1,10 +1,6 @@
+from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
 import sys
 
-from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
-
-
-# Subclass QMainWindow to customize your application's main window
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -12,13 +8,18 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("My App")
 
         button = QPushButton("Press Me!")
-
-        self.setFixedSize(QSize(400, 300))
+        button.setCheckable(True)
+        button.clicked.connect(self.the_button_was_clicked)
+        button.clicked.connect(self.the_button_was_toggled)
 
         # Set the central widget of the Window.
         self.setCentralWidget(button)
-        # As well as.setFixedSize() you can also call.setMinimumSize() and.setMaximumSize() to set the minimum and maximum sizes respectively
 
+    def the_button_was_clicked(self):
+        print("Clicked!")
+
+    def the_button_was_toggled(self, checked):
+        print("Checked?", checked)
 
 app = QApplication(sys.argv)
 
