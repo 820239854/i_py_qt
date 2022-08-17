@@ -34,12 +34,13 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(button)
 
     def button_clicked(self, s):
-        dlg = QMessageBox(self)
-        dlg.setWindowTitle("I have a question!")
-        dlg.setText("This is a question dialog")
-        dlg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-        dlg.setIcon(QMessageBox.Question)
-        button = dlg.exec_()
+        button = QMessageBox.question(self, "Question dialog", "The longer message")
+
+        # QMessageBox.about(parent, title, message)
+        # QMessageBox.critical(parent, title, message)
+        # QMessageBox.information(parent, title, message)
+        # QMessageBox.question(parent, title, message)
+        # QMessageBox.warning(parent, title, message)
 
         if button == QMessageBox.Yes:
             print("Yes!")
