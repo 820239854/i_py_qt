@@ -30,11 +30,15 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.w = AnotherWindow()
         self.button = QPushButton("Push for Window")
-        self.button.clicked.connect(self.show_new_window)
+        self.button.clicked.connect(self.toggle_window)
         self.setCentralWidget(self.button)
 
-    def show_new_window(self, checked):
-        self.w.show()
+    def toggle_window(self, checked):
+        if self.w.isVisible():
+            self.w.hide()
+
+        else:
+            self.w.show()
 
 
 app = QApplication(sys.argv)
