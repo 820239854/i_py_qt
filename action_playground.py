@@ -14,10 +14,10 @@ class MainWindow(QMainWindow):
         label.setAlignment(Qt.AlignCenter)
 
         self.setCentralWidget(label)
+
         toolbar = QToolBar("My main toolbar")
         toolbar.setIconSize(QSize(16, 16))
         self.addToolBar(toolbar)
-
         button_action = QAction(QIcon("./res/bug.png"), "&Your button", self)
         button_action.setStatusTip("This is your button")
         button_action.triggered.connect(self.onMyToolBarButtonClick)
@@ -42,7 +42,9 @@ class MainWindow(QMainWindow):
         file_menu = menu.addMenu("&File")
         file_menu.addAction(button_action)
         file_menu.addSeparator()
-        file_menu.addAction(button_action2)
+
+        file_submenu = file_menu.addMenu("Submenu")
+        file_submenu.addAction(button_action2)
 
     def onMyToolBarButtonClick(self, s):
         print("click", s)
