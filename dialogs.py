@@ -3,8 +3,8 @@ import sys
 from PySide6.QtWidgets import QApplication, QDialog, QMainWindow, QPushButton, QDialogButtonBox, QLabel, QVBoxLayout
 
 class CustomDialog(QDialog):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
         self.setWindowTitle("HELLO!")
 
@@ -34,12 +34,15 @@ class MainWindow(QMainWindow):
     def button_clicked(self, s):
         print("click", s)
 
-        dlg = CustomDialog()
+        dlg = CustomDialog(self)
 
         # we start it using.exec() - just like we did for QApplication to create the main event loop of our
         # application. That’s not a coincidence: when you exec the QDialog an entirely new event loop - specific for
         # the dialog - is created.
-        dlg.exec()
+        if dlg.exec():
+            print("Success!")
+        else:
+            print("Cancel!")
 
 
 app = QApplication(sys.argv)
