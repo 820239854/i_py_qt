@@ -27,12 +27,12 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.button)
 
     def show_new_window(self, checked):
-        # once we leave this method the w variable will be cleaned up by Python,
-        # and the window destroyed.To fix this we need to keep a reference to the window
-        # somewhere — on the main window self object, for example.
         if self.w is None:
             self.w = AnotherWindow()
             self.w.show()
+        else:
+            self.w.close()
+            self.w = None  # Dis
 
 app = QApplication(sys.argv)
 
