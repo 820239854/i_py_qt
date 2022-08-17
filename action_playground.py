@@ -14,7 +14,6 @@ class MainWindow(QMainWindow):
         label.setAlignment(Qt.AlignCenter)
 
         self.setCentralWidget(label)
-
         toolbar = QToolBar("My main toolbar")
         toolbar.setIconSize(QSize(16, 16))
         self.addToolBar(toolbar)
@@ -40,9 +39,10 @@ class MainWindow(QMainWindow):
 
         menu = self.menuBar()
 
-        # The ampersand defines a quick key to jump to this menu when pressing Alt.
         file_menu = menu.addMenu("&File")
         file_menu.addAction(button_action)
+        file_menu.addSeparator()
+        file_menu.addAction(button_action2)
 
     def onMyToolBarButtonClick(self, s):
         print("click", s)
