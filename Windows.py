@@ -1,4 +1,6 @@
 import sys
+from random import randint
+
 from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QPushButton,
                              QVBoxLayout, QWidget)
 
@@ -11,7 +13,7 @@ class AnotherWindow(QWidget):
     def __init__(self):
         super().__init__()
         layout = QVBoxLayout()
-        self.label = QLabel("Another Window")
+        self.label = QLabel("Another Window % d" % randint(0, 100))
         layout.addWidget(self.label)
         self.setLayout(layout)
 
@@ -19,14 +21,18 @@ class AnotherWindow(QWidget):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.w = None  # No external window yet.
         self.button = QPushButton("Push for Window")
         self.button.clicked.connect(self.show_new_window)
         self.setCentralWidget(self.button)
 
     def show_new_window(self, checked):
-        w = AnotherWindow()
-        w.show()
-
+        # once we leave this method the w variable will be cleaned up by Python,
+        # and the window destroyed.To fix this we need to keep a reference to the window
+        # somewhere — on the main window self object, for example.
+        if self.w is None:
+            self.w = AnotherWindow()
+            self.w.show()
 
 app = QApplication(sys.argv)
 
