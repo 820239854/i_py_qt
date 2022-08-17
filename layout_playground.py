@@ -1,7 +1,14 @@
 import sys
 
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication, QHBoxLayout, QLabel, QMainWindow, QWidget
+from PySide6.QtWidgets import (
+    QApplication,
+    QHBoxLayout,
+    QLabel,
+    QMainWindow,
+    QVBoxLayout,
+    QWidget,
+)
 
 from layout_colorwidget import Color
 
@@ -11,16 +18,28 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("My App")
 
-        layout = QHBoxLayout()
+        layout1 = QHBoxLayout()
+        layout2 = QVBoxLayout()
+        layout3 = QVBoxLayout()
 
-        layout.addWidget(Color("red"))
-        layout.addWidget(Color("green"))
-        layout.addWidget(Color("blue"))
+        layout2.addWidget(Color("red"))
+        layout2.addWidget(Color("yellow"))
+        layout2.addWidget(Color("purple"))
+
+        layout1.addLayout(layout2)
+
+        layout1.addWidget(Color("green"))
+
+        layout3.addWidget(Color("red"))
+        layout3.addWidget(Color("purple"))
+
+        layout1.addLayout(layout3)
+        # layout1.setContentsMargins(0, 0, 0, 0)
+        # layout1.setSpacing(20)
 
         widget = QWidget()
-        widget.setLayout(layout)
+        widget.setLayout(layout1)
         self.setCentralWidget(widget)
-
 
 app = QApplication(sys.argv)
 
