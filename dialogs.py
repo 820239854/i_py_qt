@@ -36,11 +36,15 @@ class MainWindow(QMainWindow):
     def button_clicked(self, s):
         dlg = QMessageBox(self)
         dlg.setWindowTitle("I have a question!")
-        dlg.setText("This is a simple dialog")
+        dlg.setText("This is a question dialog")
+        dlg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        dlg.setIcon(QMessageBox.Question)
         button = dlg.exec_()
 
-        if button == QMessageBox.Ok:
-            print("OK!")
+        if button == QMessageBox.Yes:
+            print("Yes!")
+        else:
+            print("No!")
 
 
 app = QApplication(sys.argv)
