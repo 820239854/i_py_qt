@@ -1,30 +1,19 @@
-from PySide6.QtGui import QPalette, QColor
-from PySide6.QtCore import Qt
-
 import sys
 
-
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QColor, QPalette
 from PySide6.QtWidgets import (
     QApplication,
-    QMainWindow,
     QCheckBox,
     QComboBox,
-    QDateEdit,
-    QDateTimeEdit,
-    QDial,
-    QDoubleSpinBox,
-    QFontComboBox,
-    QLCDNumber,
     QLabel,
     QLineEdit,
-    QProgressBar,
+    QMainWindow,
+    QPlainTextEdit,
     QPushButton,
-    QRadioButton,
-    QSlider,
     QSpinBox,
-    QTimeEdit,
-    QWidget,  # <1>
-    QVBoxLayout,  # <2>
+    QVBoxLayout,
+    QWidget,
 )
 
 
@@ -32,81 +21,51 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Widgets App")
+        self.setWindowTitle("QSS Tester")
+
+        self.editor = QPlainTextEdit()
+        self.editor.textChanged.connect(self.update_styles)
 
         layout = QVBoxLayout()
-        widgets = [
-            QCheckBox,
-            QComboBox,
-            QDateEdit,
-            QDateTimeEdit,
-            QDial,
-            QDoubleSpinBox,
-            QFontComboBox,
-            QLCDNumber,
-            QLabel,
-            QLineEdit,
-            QProgressBar,
-            QPushButton,
-            QRadioButton,
-            QSlider,
-            QSpinBox,
-            QTimeEdit,
-        ]
+        layout.addWidget(self.editor)
 
-        for w in widgets:
-            widget = w(self)
-            widget.setAutoFillBackground(True)
-            layout.addWidget(widget)
+        # Define a set of simple widgets.
+        cb = QCheckBox("Checkbox")
+        layout.addWidget(cb)
 
-        widget = QWidget()
-        widget.setLayout(layout)
+        combo = QComboBox()
+        combo.setObjectName("thecombo")
+        combo.addItems(["First", "Second", "Third", "Fourth"])
+        layout.addWidget(combo)
 
-        # Set the central widget of the Window. Widget will expand
-        # to take up all the space in the window by default.
-        self.setCentralWidget(widget)
+        sb = QSpinBox()
+        sb.setRange(0, 99999)
+        layout.addWidget(sb)
+
+        l = QLabel("This is a label")
+        layout.addWidget(l)
+
+        le = QLineEdit()
+        le.setObjectName("mylineedit")
+        layout.addWidget(le)
+
+        pb = QPushButton("Push me!")
+        layout.addWidget(pb)
+
+        self.container = QWidget()
+        self.container.setLayout(layout)
+
+        self.setCentralWidget(self.container)
+
+    def update_styles(self):
+        qss = self.editor.toPlainText()
+        self.setStyleSheet(qss)
 
 
 app = QApplication(sys.argv)
 app.setStyle("Fusion")
 
-darkPalette = app.palette()
-darkPalette.setColor(QPalette.Window, QColor(53, 53, 53))
-darkPalette.setColor(QPalette.WindowText, Qt.white)
-darkPalette.setColor(
-    QPalette.Disabled, QPalette.WindowText, QColor(127, 127, 127)
-)
-darkPalette.setColor(QPalette.Base, QColor(42, 42, 42))
-darkPalette.setColor(QPalette.AlternateBase, QColor(66, 66, 66))
-darkPalette.setColor(QPalette.ToolTipBase, Qt.white)
-darkPalette.setColor(QPalette.ToolTipText, Qt.white)
-darkPalette.setColor(QPalette.Text, Qt.white)
-darkPalette.setColor(
-    QPalette.Disabled, QPalette.Text, QColor(127, 127, 127)
-)
-darkPalette.setColor(QPalette.Dark, QColor(35, 35, 35))
-darkPalette.setColor(QPalette.Shadow, QColor(20, 20, 20))
-darkPalette.setColor(QPalette.Button, QColor(53, 53, 53))
-darkPalette.setColor(QPalette.ButtonText, Qt.white)
-darkPalette.setColor(
-    QPalette.Disabled, QPalette.ButtonText, QColor(127, 127, 127)
-)
-darkPalette.setColor(QPalette.BrightText, Qt.red)
-darkPalette.setColor(QPalette.Link, QColor(42, 130, 218))
-darkPalette.setColor(QPalette.Highlight, QColor(42, 130, 218))
-darkPalette.setColor(
-    QPalette.Disabled, QPalette.Highlight, QColor(80, 80, 80)
-)
-darkPalette.setColor(QPalette.HighlightedText, Qt.white)
-darkPalette.setColor(
-    QPalette.Disabled,
-    QPalette.HighlightedText,
-    QColor(127, 127, 127),
-)
-
-w = MainWindow()  # Replace with your custom mainwindow.
+w = MainWindow()
 w.show()
-
-app.setPalette(darkPalette)
 
 app.exec()
