@@ -19,7 +19,7 @@
      <rect>
       <x>304</x>
       <y>253</y>
-      <width>161</width>
+      <width>201</width>
       <height>41</height>
      </rect>
     </property>
@@ -27,8 +27,8 @@
      <string>PushButton</string>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>:/icon/C:/Users/User/Downloads/pyside6-source/designer/animal-penguin.png</normaloff>:/icon/C:/Users/User/Downloads/pyside6-source/designer/animal-penguin.png</iconset>
+     <iconset theme="accessories-dictionary" resource="res.qrc">
+      <normaloff>:/icon/animal-penguin.png</normaloff>:/icon/animal-penguin.png</iconset>
     </property>
    </widget>
   </widget>
