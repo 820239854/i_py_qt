@@ -1,4 +1,5 @@
 import sys
+from datetime import datetime
 from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Qt
 
@@ -10,10 +11,24 @@ class TableModel(QtCore.QAbstractTableModel):
 
     def data(self, index, role):
         if role == Qt.DisplayRole:
-            # See below for the nested-list data structure.
-            # .row() indexes into the outer list,
-            # .column() indexes into the sub-list
-            return self._data[index.row()][index.column()]
+            # Get the raw value
+            value = self._data[index.row()][index.column()]
+
+            # Perform per-type checks and render accordingly.
+            if isinstance(value, datetime):
+                # Render time to YYY-MM-DD.
+                return value.strftime("%Y-%m-%d")
+
+            if isinstance(value, float):
+                # Render float to 2 dp
+                return "%.2f" % value
+
+            if isinstance(value, str):
+                # Render strings with quotes
+                return '"%s"' % value
+
+            # Default (anything not captured above: e.g. int)
+            return value
 
     def rowCount(self, index):
         # The length of the outer list.
@@ -33,10 +48,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
         data = [
             [4, 9, 2],
-            [1, -1, -1],
-            [3, 5, -5],
-            [3, 3, 2],
-            [7, 8, 9],
+            [1, -1, 'hello'],
+            [3.023, 5, -5],
+            [3, 3, datetime(2017, 10, 1)],
+            [7.555, 8, 9],
         ]
 
         self.model = TableModel(data)
